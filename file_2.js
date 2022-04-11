@@ -1,16 +1,6 @@
+// 可配置优化版
 // 基于深度优先的遍历方式
-const DEFAULT_OPTIONS = {
-  nullFlie: "NULLFILE",
-  Dir: "DIR",
-  File: "FILE",
-  pathSeparator: "/",
-  sequences: {
-    throughTee: "├──",
-    endTee: "└──",
-    vertical: "|  ",
-    emptyColumn: "   ",
-  },
-};
+
 class Node {
   constructor(value, stats) {
     this.value = value;
@@ -36,16 +26,16 @@ function Stringslice(target) {
 }
 
 // 2.0 找出根节点
-function root(targetArrs) {
+function root(targetArrs, default_option) {
   let text = /^[a-zA-Z]+/;
   let rootNode, value;
   targetArrs.forEach((element, index) => {
     element.search(text) !== -1 ? (value = text.exec(element)) : "";
   });
   if (!value) {
-    rootNode = new Node(DEFAULT_OPTIONS.nullFlie, DEFAULT_OPTIONS.Dir);
+    rootNode = new Node(default_option.nullFlie, default_option.Dir);
   } else {
-    rootNode = new Node(value[0], DEFAULT_OPTIONS.Dir);
+    rootNode = new Node(value[0], default_option.Dir);
     targetArrs.shift();
   }
   return rootNode;
@@ -66,15 +56,19 @@ function searName(element) {
 }
 
 // 分变子文件或者是目录
-function matchElement(element) {
-  const Childtest = /^(├──|└──)/;
+// default_option
+function matchElement(element, default_option) {
+  // const Childtest = /^(├──|└──)/;
+  const Childtest = new RegExp(`^(${default_option.sequences.throughTee}|${default_option.sequences.endTee})`);
+  console.log('ss', Childtest)
   let boolean = element.search(Childtest) !== -1 ? true : false;
   return boolean;
 }
 
 // 是否是最后一个文件
-function lastfile(element) {
-  const Childtest = /└──/;
+function lastfile(element, default_option) {
+  // const Childtest = /└──/;
+  const Childtest = new RegExp(`${default_option.sequences.endTee}`);
   let boolean;
   if (!isdir(element)) {
     boolean = element.search(Childtest) !== -1 ? true : false;
@@ -83,15 +77,17 @@ function lastfile(element) {
 }
 
 // 是否孙节点 '|  |  |  └──filename/.js'
-function isgrandson(element) {
-  const test = /^|/;
+function isgrandson(element, default_option) {
+  // const test = /^|/;
+  const test = new RegExp(`^${default_option.sequences.vertical.trim()}`);
   let value = element.search(test) !== -1 ? true : false;
   return value;
 }
 
 // 返回孙节点的节点
-function returnDepth(element) {
-  let value = element.split("|");
+function returnDepth(element, default_option) {
+  // let value = element.split("|");
+  let value = element.split(`${default_option.sequences.vertical}`);
   let length = value.length - 1;
   value = value[length].trim();
   return value;
@@ -112,59 +108,83 @@ function depthSearch(stack, value, stats) {
 }
 
 // 遍历
-function forEachTarget(targets, stack) {
+function forEachTarget(targets, stack, default_option) {
   let index = stack.length - 1;
   for (let i = 0; i < targets.length; i++) {
     let target = targets[i];
-    child(target, index, stack);
+    child(target, index, stack, default_option);
   }
   return stack;
 }
 
-function child(target, index, stack) {
+function child(target,index, stack, default_option) {
   let j = stack.length - 1;
-  if (matchElement(target)) {
+  if (matchElement(target, default_option)) {
     // 子目录或者是子文件
     let value = searName(target);
 
-    // 子 是目录就会保存当前的栈
     if (isdir(value)) {
-      // Map(1) {
-      //   'home' => Node { value: 'home', stats: 'DIR', children: Map(0) {} }
-      // }
-      depthSearch(stack, value, DEFAULT_OPTIONS.Dir)
+    
+      depthSearch(stack, value, default_option.Dir)
 
       stack.push(value);
       j = stack.length - 1;
-      // 子 是文件
     } else {
-      depthSearch(stack, value, DEFAULT_OPTIONS.File)
-      // 最后一个是文件不是目录弹出当前的栈
-      if (lastfile(target)) {
+      depthSearch(stack, value, default_option.File)
+      if (lastfile(target, default_option)) {
         if (stack.length > 1) {
           stack.pop();
           j = stack.length - 1;
         }
       }
     }
-    // 孙
-  } else if (isgrandson(target)) {
-    let value = returnDepth(target);
-    child(value, j, stack);
+  } else if (isgrandson(target, default_option)) {
+    let value = returnDepth(target, default_option);
+    child(value,j, stack, default_option);
   }
 }
 
-function main(stringArrs) {
+function main(stringArrs, default_option) {
   let stack = [];
 
   const target = Stringslice(stringArrs);
-  const nodeRoot = root(target);
+  const nodeRoot = root(target, default_option);
   stack.push(nodeRoot);
 
-  // 查找文件
-  let node = forEachTarget(target, stack);
+  let node = forEachTarget(target, stack, default_option);
   return node[0];
 }
 
 
+
 module.exports = main;
+
+const target = `
+home
+├── foo.js
+├── test
+|  ├── bar.js
+|  └── baz.js
+└── bat.js
+`.trim();
+
+// `
+// 'home/user/foo.js',
+// 'home/user/test/bar.js',
+// 'home/user/test/baz.js',
+// 'home/user/bat.js'
+// `;
+const DEFAULT_OPTIONS = {
+  nullFlie: "NULLFILE",
+  Dir: "DIR",
+  File: "FILE",
+  pathSeparator: "/",
+  sequences: {
+    throughTee: "├──",
+    endTee: "└──",
+    vertical: "|  ",
+    emptyColumn: "   ",
+  },
+};
+
+console.log(main(target, DEFAULT_OPTIONS))
