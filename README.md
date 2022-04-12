@@ -42,6 +42,7 @@ home/user
 ]
 
 console.log(treeTopath(target))
+~~~
 
 ## 高级使用
 `index.js`文件导出了一个使用函数和一个配置对象默认使用以下对象
