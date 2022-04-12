@@ -1,6 +1,9 @@
 {
   "name": "rx-file",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+  "main": "src/index.js",
+  "license": "MIT",
+  "author": "2742217795@qq.com",
+  "description": "File tree to path"
+
 }

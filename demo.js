@@ -1,5 +1,6 @@
-const getFilepath = require('./index')
+const getFilepath = require('rx-file')
 
+console.log(getFilepath)
 const target = `
 home
 ├── foo.js
