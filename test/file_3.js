@@ -1,3 +1,6 @@
+// 可配置优化版
+// 基于深度优先的遍历方式
+
 class Node {
   constructor(value, stats) {
     this.value = value;
@@ -58,6 +61,7 @@ function searName(element) {
 function matchElement(element, default_option) {
   // const Childtest = /^(├──|└──)/;
   const Childtest = new RegExp(`^(${default_option.sequences.throughTee}|${default_option.sequences.endTee})`);
+  console.log('ss', Childtest)
   let boolean = element.search(Childtest) !== -1 ? true : false;
   return boolean;
 }
@@ -155,3 +159,33 @@ function main(stringArrs, default_option) {
 
 
 module.exports = main;
+
+const target = `
+home
+├── foo.js
+├── test
+|  ├── bar.js
+|  └── baz.js
+└── bat.js
+`.trim();
+
+// `
+// 'home/user/foo.js',
+// 'home/user/test/bar.js',
+// 'home/user/test/baz.js',
+// 'home/user/bat.js'
+// `;
+const DEFAULT_OPTIONS = {
+  nullFlie: "NULLFILE",
+  Dir: "DIR",
+  File: "FILE",
+  pathSeparator: "/",
+  sequences: {
+    throughTee: "├──",
+    endTee: "└──",
+    vertical: "|  ",
+    emptyColumn: "   ",
+  },
+};
+
+console.log(main(target, DEFAULT_OPTIONS))

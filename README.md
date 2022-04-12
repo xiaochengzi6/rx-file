@@ -21,7 +21,56 @@ home/user
 ~~~
 
 ## 使用
+~~~js
+const {treeTopath}= require('../index')
 
+console.log(treeTopath)
+const target = `
+home/user
+├── foo.js
+├── test
+|  ├── bar.js
+|  └── baz.js
+└── bat.js
+`.trim();
+
+[
+  'home/user/foo.js',
+  'home/user/test/bar.js',
+  'home/user/test/baz.js',
+  'home/user/bat.js'
+]
+
+console.log(treeTopath(target))
+
+## 高级使用
+`index.js`文件导出了一个使用函数和一个配置对象默认使用以下对象
+~~~js
+let DEFAULT_OPTIONS = {
+  nullFlie: "NULLFILE",
+  Dir: "DIR",
+  File: "FILE",
+  pathSeparator: "/",
+  sequences: {
+    throughTee: "├──",
+    endTee: "└──",
+    vertical: "|  ",
+    emptyColumn: "   ",
+  },
+};
+~~~
+不建议改动如果你改动这些，你很有可能得到错误的消息
+`nullFlie`: 根节点没有时代替根节点名
+`Dir`: 标记 目录节点
+`File`: 标记 文件节点
+
+可配置
+`pathSeparator`: 生成文件路径的符号
+`sequences`: 符号对象主要是自由选择切割文件树的符号
+`throughTee`: 子节点的符号
+`endTeez`: 最后一个节点的符号
+`vertical`: 孙文件的符号
+`emptyColumn` 空白符
 
 ## 基本算法
 ~~~js
@@ -40,5 +89,3 @@ home/user
 // 4.4 没有文件要保存就会弹出 根文件
 // 4.5 结束
 ~~~
-## 了解
-`/test`是用来我自己测试文件的并且里面存放了一些包的改动但没有发布的

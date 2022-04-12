@@ -1,8 +1,9 @@
-const getFilepath = require('rx-file')
+// const getFilepath = require('rx-file')
+const {treeTopath}= require('../index')
 
-console.log(getFilepath)
+console.log(treeTopath)
 const target = `
-home
+home/user
 ├── foo.js
 ├── test
 |  ├── bar.js
@@ -10,11 +11,11 @@ home
 └── bat.js
 `.trim();
 
-// `
-// 'home/user/foo.js',
-// 'home/user/test/bar.js',
-// 'home/user/test/baz.js',
-// 'home/user/bat.js'
-// `;
+// [
+//   'home/foo.js',
+//   'home/test/bar.js',
+//   'home/test/baz.js',
+//   'home/bat.js'
+// ]
 
-console.log(getFilepath(target))
+console.log(treeTopath(target))
