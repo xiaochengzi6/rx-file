@@ -61,16 +61,24 @@ let DEFAULT_OPTIONS = {
 };
 ~~~
 不建议改动如果你改动这些，你很有可能得到错误的消息
+
 `nullFlie`: 根节点没有时代替根节点名
+
 `Dir`: 标记 目录节点
+
 `File`: 标记 文件节点
 
 可配置
 `pathSeparator`: 生成文件路径的符号
+
 `sequences`: 符号对象主要是自由选择切割文件树的符号
+
 `throughTee`: 子节点的符号
+
 `endTeez`: 最后一个节点的符号
+
 `vertical`: 孙文件的符号
+
 `emptyColumn` 空白符
 
 ## 基本算法
