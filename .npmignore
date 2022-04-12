@@ -1,0 +1,6 @@
+yarn.lock
+/test
+rollup.config.js
+/node_modules
+本地文件.md
+/.vscode

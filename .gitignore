@@ -1,0 +1,8 @@
+/node_modules
+本地文件.md
+/.vscode
+demo.js
+file_2.js
+yarn.lock
+rollup.config.js
+/test
