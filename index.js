@@ -27,6 +27,3 @@ module.exports = {
   treeTopath: treetopath,
   defaultOptions: DEFAULT_OPTIONS
 };
-
-
-createfile('/themplate', './the.txt')
