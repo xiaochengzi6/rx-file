@@ -177,3 +177,29 @@ function main(stringArrs, default_option) {
 }
 
 module.exports = main;
+
+// main (stringArrs) 可以是一个文件也可以是一个字符串。
+// 如果是文件 的话就需要去读取。
+const str = `
+home/user
+├── foo.js
+├── test
+|  ├── bar.js
+|  └── baz.js
+└── bat.js
+`.trim();
+let uu = "./the.txt";
+
+let DEFAULT_OPTIONS = {
+  nullFlie: "NULLFILE",
+  Dir: "DIR",
+  File: "FILE",
+  pathSeparator: "/",
+  sequences: {
+    throughTee: "├──",
+    endTee: "└──",
+    vertical: "|  ",
+    emptyColumn: "   ",
+  },
+};
+console.log(main(uu, DEFAULT_OPTIONS))
