@@ -18,4 +18,9 @@ home/user
 //   'home/bat.js'
 // ]
 
-console.log(treeTopath(target))
+let a = new Map()
+a.set('w','s')
+a.set('1','sss')
+console.log(a)
+console.log(a.size)
+// console.log(treeTopath(target))

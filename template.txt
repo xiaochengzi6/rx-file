@@ -1,0 +1,38 @@
+react-template
+├── public # 存放html模板
+├── src
+│ ├── assets # 存放会被 Webpack 处理的静态资源文件：一般是自己写的 js、css 或者图片等静态资源
+│ │ ├── fonts # iconfont 目录
+│ │ ├── images # 图片资源目录
+│ │ ├── css # 全局样式目录
+│ │ │  ├── common.scss # 全局通用样式目录
+│ │ │  ├── core.scss # 全局sass 变量目录,直接使用，不需要引用，全局已统一引入。
+│ │ │  └── init.scss # 全局初始化css
+│ │ └── js # 全局js
+│ ├── common # 存放项目通用文件
+│ │ ├── Resolution.js # 布局适配配置中心
+│ │ └── AppContext.js # 全局App上下文
+│ ├── components # 项目中通用的业务组件目录
+│ ├── config # 项目配置文件
+│ ├── pages # 项目页面目录
+│ ├── types # 项目中声明文件
+│ │ ├── service # 项目中服务相关声明文件
+│ │ ├── enum.js # 项目中枚举类型
+│ │ ├── IContext.js  # 全局App上下文声明
+│ │ ├── IRedux.js # redux相关声明
+│ │ └── IRouterPage.js # 路由相关声明
+│ ├── uiLibrary # 组件库
+│ ├── routes # 路由目录
+│ │ ├── index.js # 路由配置入口文件
+│ │ └── RouterUI.js # 路由转换
+│ ├── store # redux 仓库
+│ │ ├── actionCreaters # action创建与分发绑定
+│ │ ├── action  # 项目中action
+│ │ ├── reducers  # 项目中reducers
+│ │ │  └──history # 项目中路由相关history
+│ │ ├── index.ts # 全局 store 获取
+│ │ └── connect.ts # react 页面与store 连接
+│ ├── utils # 全局通用工具函数目录
+│ ├── App.js # App全局
+│ ├── index.js # 项目入口文件
+│ └── index.scss # 项目入口引入的scss
