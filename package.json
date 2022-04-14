@@ -5,9 +5,7 @@
   "license": "MIT",
   "author": "2742217795@qq.com",
   "description": "File tree to path",
-  "dependencies": {
-    "rx-file": "^1.0.0"
-  },
+  "dependencies": {},
   "keywords": [
     "util",
     "utility",
@@ -16,5 +14,11 @@
     "directory",
     "print",
     "path"
-  ]
+  ],
+  "peerDependencies": {
+    "unique-filename": "^1.1.1"
+  },
+  "devDependencies": {
+    "unique-filename": "^1.1.1"
+  }
 }
