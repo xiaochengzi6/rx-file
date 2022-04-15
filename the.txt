@@ -1,6 +1,0 @@
-home/user
-├── foo.js
-├── test
-|  ├── bar.js
-|  └── baz.js
-└── bat.js
