@@ -1,26 +1,62 @@
-// const getFilepath = require('rx-file')
-const {treeTopath}= require('../index')
-
-console.log(treeTopath)
-const target = `
-home/user
+const path = require("path");
+const { main } = require("../development/fileMap.js");
+const str = `
+home
 ├── foo.js
 ├── test
 |  ├── bar.js
 |  └── baz.js
 └── bat.js
 `.trim();
+let uu = "./the.txt";
 
-// [
-//   'home/foo.js',
-//   'home/test/bar.js',
-//   'home/test/baz.js',
-//   'home/bat.js'
-// ]
+let DEFAULT_OPTIONS = {
+  nullFlie: "NULLFILE",
+  Dir: "DIR",
+  File: "FILE",
+  depth: 5,
+  pathSeparator: "/",
+  throughTee: "├──",
+  endTee: "└──",
+  vertical: "│",
+};
+let one = main('./template.txt', { sequences: { vertical: "|" } });
 
-let a = new Map()
-a.set('w','s')
-a.set('1','sss')
-console.log(a)
-console.log(a.size)
-// console.log(treeTopath(target))
+let arr = [];
+arr.push(one[0].value);
+let strs = [];
+
+forMap(one[0].children, arr);
+
+console.log("ssssss", strs);
+
+function addString(element, arr) {
+  let str = "";
+  let lenght = arr.length;
+  if (lenght) {
+    for (let i = 0; i < lenght; i++) {
+      str = str + arr[i] + path.sep;
+    }
+    str = str + element;
+    strs.push(str);
+  }
+}
+
+function forMap(map, arr) {
+  map.forEach((element) => {
+    if (element.stats == "DIR") {
+      arr.push(element.value);
+      if (element.children.size == 0) {
+        /*创建空目录*/
+        addString("", arr);
+        arr.pop();
+      } else {
+        forMap(element.children, arr);
+      }
+    } else {
+      /*进行字符串的叠加*/
+      addString(element.value, arr);
+    }
+  });
+  arr.pop();
+}

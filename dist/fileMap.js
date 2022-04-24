@@ -14,28 +14,14 @@ const {
   isFile,
   elementSplit,
   readfile,
-  hasgrandElement,
-} = require("./utils.js");
+  hasgrandElement
+} = require('./utils.js');
+console.log(isFile);
 var stack = [];
 var deptch = [];
 exports.main = function main(stringArrs, default_option) {
-  let default_must = {
-    nullFlie: "NULLFILE",
-    Dir: "DIR",
-    File: "FILE",
-    depth: 5,
-    pathSeparator: "/",
-    throughTee: "├──",
-    endTee: "└──",
-    vertical: "│",
-  };
-  if (typeof default_option === null || typeof default_option === undefined) {
-    default_option = default_must;
-  } else {
-    default_option = Object.assign({}, default_must, default_option);
-  }
   if (!typeof stringArrs == "string") {
-    throw Error("Parameter must specify the form of a string");
+    throw Error("stringArrs 必须指定字符串的形式");
   }
   stringArrs = stringArrs.trim();
   let target;
@@ -43,7 +29,7 @@ exports.main = function main(stringArrs, default_option) {
     try {
       stringArrs = readfile(stringArrs);
     } catch (err) {
-      throw Error("Wrong file path");
+      console.log("文件错误");
     }
   }
   target = Stringslice(stringArrs);
@@ -61,7 +47,7 @@ function addElementNode(value, stats, dirlength, default_option) {
         return;
       }
     } catch (err) {
-      throw Error(" depth Parameter error should be Number!!!");
+      console.log("depth 参数错误");
     }
     let w;
     if (dirlength == 0) {

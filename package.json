@@ -18,7 +18,11 @@
   "peerDependencies": {
     "unique-filename": "^1.1.1"
   },
+  "scripts": {
+    "build": "rollup -c"
+  },
   "devDependencies": {
+    "rollup-plugin-cleanup": "^3.2.1",
     "unique-filename": "^1.1.1"
   }
 }

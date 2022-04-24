@@ -1,6 +1,5 @@
-'use strict';
+const path = require('path')
 
-const path = require('path');
 let strs = [];
 function main(node) {
     const arr = [];
@@ -15,6 +14,8 @@ function main(node) {
     }
 }
 module.exports = main;
+
+
 function addString(element, arr) {
   let str = "";
   let lenght = arr.length;
@@ -26,18 +27,23 @@ function addString(element, arr) {
     strs.push(str);
   }
 }
+
 function forMap(map, arr) {
   map.forEach((element) => {
     if (element.stats == "DIR") {
       arr.push(element.value);
       if(element.children.size == 0){
-        addString('', arr);
-        arr.pop();
-      }else {
+        // console.log('element.value', element)
+        /*创建空目录*/
+        addString('', arr)
+        arr.pop()
+      }else{
         forMap(element.children, arr);
       }
+      
     } else {
-      addString(element.value, arr);
+      /*进行字符串的叠加*/ 
+      addString(element.value, arr, strs);
     }
   });
   arr.pop();
