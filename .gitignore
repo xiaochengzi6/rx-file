@@ -2,4 +2,6 @@
 本地文件.md
 /.vscode
 yarn-error.log
-/lib
+/test
+template.txt
+rollup.config.js
