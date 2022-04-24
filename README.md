@@ -1,4 +1,5 @@
 ## 主要功能
+将文件树转为文件路径
 ~~~js
 `
 home/user
@@ -22,9 +23,8 @@ home/user
 
 ## 使用
 ~~~js
-const {treeTopath}= require('../index')
+const {treePath}= require('../index')
 
-console.log(treeTopath)
 const target = `
 home/user
 ├── foo.js
@@ -32,16 +32,15 @@ home/user
 |  ├── bar.js
 |  └── baz.js
 └── bat.js
-`.trim();
-
+`
+treePath(target)
+// ------output------------
 [
   'home/user/foo.js',
   'home/user/test/bar.js',
   'home/user/test/baz.js',
   'home/user/bat.js'
 ]
-
-console.log(treeTopath(target))
 ~~~
 
 ## 高级使用
@@ -71,8 +70,6 @@ let DEFAULT_OPTIONS = {
 
 `pathSeparator`: 生成文件路径的符号
 
-`sequences`: 符号对象主要是自由选择切割文件树的符号
-
 `throughTee`: 子节点的符号
 
 `endTee`: 最后一个节点的符号
@@ -81,13 +78,86 @@ let DEFAULT_OPTIONS = {
 
 
 你如果需要你只需要传入你认为你应该需要的属性就行比如：
-
 ~~~js
 {
-  endTeez: '|'
+  endTee: '|' // 来替换默认的 endTee 属性
 }
+
+// 使用
+
+const {treePath} = require('rx-file')
+treePath('./xxx.txt', {endTee: '|'})
+
 ~~~
 通过这样的方式来去覆盖默认的属性 
+
+
+通常来说你使用的过程中最重要需要两个 `throughTee`、 `endTee` 和 `vertical` 你在使用的过程中只需要确保这三者正确就行。
+
+## 小案例
+通常都是使用模板文件来去构建 我们需要创建 一个名为 `template.txt`的文件 往里面塞入准备好的文件树
+
+这里使用了他的文件树但又做了些改动[这里](https://juejin.cn/post/7003257639199064100)
+~~~
+react-template
+├── public # 存放html模板
+├── src
+│ ├── assets # 存放会被 Webpack 处理的静态资源文件：一般是自己写的 js、css 或者图片等静态资源
+│ │ ├── fonts # iconfont 目录
+│ │ ├── images # 图片资源目录
+│ │ ├── css # 全局样式目录
+│ │ │  ├── common.scss # 全局通用样式目录
+│ │ │  ├── core.scss # 全局sass 变量目录,直接使用，不需要引用，全局已统一引入。
+│ │ │  └── init.scss # 全局初始化css
+│ │ └── js # 全局js
+│ ├── common # 存放项目通用文件
+│ │ ├── Resolution.js # 布局适配配置中心
+│ │ └── AppContext.js # 全局App上下文
+│ ├── components # 项目中通用的业务组件目录
+│ ├── config # 项目配置文件
+│ ├── pages # 项目页面目录
+│ ├── types # 项目中声明文件
+│ │ ├── service # 项目中服务相关声明文件
+│ │ ├── enum.js # 项目中枚举类型
+│ │ ├── IContext.js  # 全局App上下文声明
+│ │ ├── IRedux.js # redux相关声明
+│ │ └── IRouterPage.js # 路由相关声明
+│ ├── uiLibrary # 组件库
+│ ├── routes # 路由目录
+│ │ ├── index.js # 路由配置入口文件
+│ │ └── RouterUI.js # 路由转换
+│ ├── store # redux 仓库
+│ │ ├── actionCreaters # action创建与分发绑定
+│ │ ├── action  # 项目中action
+│ │ ├── reducers  # 项目中reducers
+│ │ │  └──history # 项目中路由相关history
+│ │ ├── index.ts # 全局 store 获取
+│ │ └── connect.ts # react 页面与store 连接
+│ ├── utils # 全局通用工具函数目录
+│ ├── App.js # App全局
+│ ├── index.js # 项目入口文件
+│ └── index.scss # 项目入口引入的scss
+~~~
+
+然后下载  `yarn add --dev rx-file`
+
+~~~js
+const path = require("path");
+const main = require("../index");
+
+console.log(main)
+
+// 第一种
+// let a = main.fileMap('./template.txt')/*用于生成 对象节点*/
+// let b = main.treePath(a)
+// console.log(a)
+// console.log(b)
+
+// or 第二种
+let b = main.treePath('./template.txt') /*用于生成文档路径*/
+console.log(b) 
+~~~
+
 ## 基本算法
 文件树转为文件路径分成了两个思路
 >1. 先将文件属性图转为 Map 的节点

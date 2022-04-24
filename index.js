@@ -1,29 +1,30 @@
 const fileMap = require("./lib/fileMap");
 const forEachMap = require("./lib/forEach");
-const createFile = require('./lib/createfile')
+const createFile = require("./lib/createfile");
 
-let DEFAULT_OPTIONS = {
+let default_options = {
   nullFlie: "NULLFILE",
   Dir: "DIR",
   File: "FILE",
   pathSeparator: "/",
-  sequences: {
-    throughTee: "├──",
-    endTee: "└──",
-    vertical: "|  ",
-    emptyColumn: "   ",
-  },
+  throughTee: "├──",
+  endTee: "└──",
+  vertical: "|",
 };
-function createfile (root, file) {
-  let Filearray = treetopath(file)
-  return createFile(root, Filearray)
+function create(root, file) {
+  let Filearray = treetopath(file);
+  return createFile(root, Filearray);
 }
-function treetopath (target) {
-  return forEachMap(fileMap(target, default_option = DEFAULT_OPTIONS));
+function treePath(target) {
+  if(typeof target !== 'object'){
+   target = fileMap(target)
+  }
+  return forEachMap(target);
 }
 
 module.exports = {
-  createFile : createfile,
-  treeTopath: treetopath,
-  defaultOptions: DEFAULT_OPTIONS
+  create,
+  treePath,
+  fileMap,
+  default_options
 };

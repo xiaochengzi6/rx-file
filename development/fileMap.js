@@ -18,7 +18,9 @@ const {
 var stack = []; // 记录目录
 var deptch = []; // 记录深度
 
-exports.main = function main(stringArrs, default_option) {
+module.exports = main
+
+function main(stringArrs, default_option) {
   let default_must = {
     nullFlie: "NULLFILE",
     Dir: "DIR",
@@ -54,6 +56,7 @@ exports.main = function main(stringArrs, default_option) {
   const nodeRoot = root(target, default_option);
   stack.push(nodeRoot);
   forEachTarget(target, default_option);
+
   return stack;
 };
 
