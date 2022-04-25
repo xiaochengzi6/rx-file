@@ -79,18 +79,20 @@ console.log(pathArr)
 
 root 并不是必须的 你可以忽略 他会自己创建一个名字大致长这样 `themplate-xxxxxxxx` 你可以指定它是一个文件名 或者是一个相对路径 甚至是一个绝对路径 当你指定是绝对路径的时候就要去指定第三参数为 `{rootdir: 'none'}`;
 
-templateArray： 模板路径 是一个数组
+**templateArray**： 模板路径 是一个数组
 
-options:  { rootdir: '__dirname' | 'tmpdir' | 'none' }
- 
-options 的选项
-  "__dirname" : 默认选项 用来在当前文件夹下生成
+**options**:  { rootdir: '__dirname' | 'tmpdir' | 'none' }
 
-  "tmpdir": 在 os.tmpdir 生成
+**options** 的选项
 
-  "none": 整个参数表明你的 root 参数是一个绝对路径
+1. "**__dirname**" : 默认选项 用来在当前文件夹 下生成
+
+2.  "**tmpdir**": 在 os.tmpdir 生成
+
+3. "**none**": 整个参数表明你的 root 参数是一个绝对路径
 
 **使用案例：**
+
 ~~~js
 const path = require("path");
 const main = require("rx-file");
@@ -130,7 +132,9 @@ let DEFAULT_OPTIONS = {
 };
 ~~~
 不建议改动如果你改动这些，你很有可能得到错误的消息
+
 **不建议动改动这些东西**
+
 `nullFlie`: 根节点没有时代替根节点名
 
 `Dir`: 标记 目录节点
@@ -138,6 +142,7 @@ let DEFAULT_OPTIONS = {
 `File`: 标记 文件节点
 
 **可配置**
+
 `depth` : 文件的迭代深度当你文件夹的深度超过此就会忽略
 
 `pathSeparator`: 生成文件路径的符号
@@ -235,6 +240,7 @@ console.log(b)
 >2. 再将 Map 节点转为路径
 
 1、先将文件属性图转为 Map 的节点 参考 `fileMap.js` 文件
+
 ~~~js
 // ------------针对V1.3.3 具有参考意义 但是已经过时-------------------
 // 1.0先切分成一个一个的（行切分每一行都会切分成一个元素保存在数组中）
