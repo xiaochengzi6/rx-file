@@ -1,5 +1,9 @@
+'use strict';
+
 const fileMap = require("./lib/fileMap");
+
 const forEachMap = require("./lib/forEach");
+
 const createFile = require("./lib/createfile");
 
 let default_options = {
@@ -9,16 +13,19 @@ let default_options = {
   pathSeparator: "/",
   throughTee: "├──",
   endTee: "└──",
-  vertical: "|",
+  vertical: "|"
 };
+
 function create(root, file) {
   let Filearray = treetopath(file);
   return createFile(root, Filearray);
 }
+
 function treePath(target) {
-  if(typeof target !== 'object'){
-   target = fileMap(target)
+  if (typeof target !== 'object') {
+    target = fileMap(target);
   }
+
   return forEachMap(target);
 }
 

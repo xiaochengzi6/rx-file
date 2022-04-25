@@ -6,3 +6,4 @@ yarn-error.log
 template.txt
 rollup.config.js
 .npmignore
+./development/.babelrc.json
