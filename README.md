@@ -1,29 +1,9 @@
 ## 主要功能
 将文件树转为文件路径
-~~~js
-`
-home/user
-├── foo.js
-├── test
-|  ├── bar.js
-|  └── baz.js
-└── bat.js
-`
-// -----||-----
-// -----||-----
-// -----vv-----
-// 变成这样
-`
-'home/user/foo.js',
-'home/user/test/bar.js',
-'home/user/test/baz.js',
-'home/user/bat.js'
-`
-~~~
 
-## 使用
+## 简单使用
 ~~~js
-const {treePath}= require('../index')
+const {treePath}= require('rx-file')
 
 const target = `
 home/user
@@ -43,8 +23,95 @@ treePath(target)
 ]
 ~~~
 
-## 高级使用
-`index.js`文件导出了一个使用函数和一个配置对象默认使用以下对象
+## 教程
+
+`rx-file` 会提供三个函数和一个配置对象，来供你使用,依次介绍一下
+
+1、`fileMap()`: 这个函数用于将字符串或者模板文件的路径 转成涵盖文件之间关系的对象,它是最基础的函数
+参数 options 是配置项 注意下文有讲解 你可能非常需要 它是关键
+~~~js
+fileMap(string|filePath, options) => fileNode{/*....*/}
+
+~~~
+### 使用案例
+~~~
+# 假设我有一个 template.txt 里面涵盖有这些内容
+home/user
+├── foo.js
+├── test
+|  ├── bar.js
+|  └── baz.js
+└── bat.js
+~~~
+~~~js
+// 我们开始使用
+const {fileMap} = require('rx-file');
+const map = fileMap('./template.txt')
+console.log(map)
+// ...
+~~~
+
+2、`treePath()`: 这个函数会接收模板文件的路径或者是涵盖文件之间关系的对象,返回一个包含文件路径的数组
+
+参数 options 是配置项 注意下文有讲解 你可能非常需要 它是关键
+~~~js
+treePath(filePath|fileNode, options) => path[]
+~~~
+
+~~~js
+// 接着上面的例子 
+const {fileMap, treePath} = require('rx-file');
+const map = fileMap('./template.txt')
+var pathArr = treePath(map)
+console.log(pathArr)
+
+// 或者
+var pathArr = treePath('./template.txt')
+console.log(pathArr)
+~~~
+
+3、`create()`: 这个函数会接收三个参数 `root` `filepath` 和 `{}` 
+
+root 并不是必须的 你可以忽略 他会自己创建一个名字大致长这样 `themplate-xxxxxxxx` 你可以指定它是一个文件名 或者是一个相对路径 甚至是一个绝对路径 当你指定是绝对路径的时候就要去指定第三参数为 `{rootdir: 'none'}`;
+
+templateArray： 模板路径 是一个数组
+
+options:  { rootdir: '__dirname' | 'tmpdir' | 'none' }
+ 
+options 的选项
+  "__dirname" : 默认选项 用来在当前文件夹下生成
+
+  "tmpdir": 在 os.tmpdir 生成
+
+  "none": 整个参数表明你的 root 参数是一个绝对路径
+
+### 简单使用
+~~~js
+const path = require("path");
+const main = require("rx-file");
+
+console.log(main)
+
+let b = main.treePath('./template.txt') /*用于生成文档路径*/
+
+/**
+ * root： 相对路径 | 绝对路径(使用时函数的第三参数必须传入 {rootdir: 'none'})
+ * templateArray： 模板路径 是一个数组
+ * options:  { rootdir: '__dirname' | 'tmpdir' | 'none' }
+ * 
+ * options 的选项
+ * "__dirname" : 默认选项 用来在当前文件夹下生成
+ * "tmpdir": 在 os.tmpdir 生成
+ * "none": 整个参数表明你的 root 参数是一个绝对路径
+ */
+let map = main.create('template', b, { rootdir: '__dirname'})
+console.log(b) 
+console.log(map) 
+
+## 配置项
+配置项是非常必要的 它是基础也是核心
+~~~
+`default_options`: 
 ~~~js
 let DEFAULT_OPTIONS = {
   nullFlie: "NULLFILE",
@@ -94,8 +161,8 @@ treePath('./xxx.txt', {endTee: '|'})
 
 通常来说你使用的过程中最重要需要两个 `throughTee`、 `endTee` 和 `vertical` 你在使用的过程中只需要确保这三者正确就行。
 
-## 小案例
-通常都是使用模板文件来去构建 我们需要创建 一个名为 `template.txt`的文件 往里面塞入准备好的文件树
+## 生成模板文件路径
+你可以将文件树形图以字符串的方式传入不过通常都是使用模板文件来去构建 我们需要创建一个名为 `template.txt`的文件 往里面塞入准备好的文件树
 
 这里使用了他的文件树但又做了些改动[这里](https://juejin.cn/post/7003257639199064100)
 ~~~
@@ -143,13 +210,11 @@ react-template
 
 ~~~js
 const path = require("path");
-const main = require("../index");
-
-console.log(main)
+const main = require("rx-file");
 
 // 第一种
-// let a = main.fileMap('./template.txt')/*用于生成 对象节点*/
-// let b = main.treePath(a)
+let a = main.fileMap('./template.txt')/*返回一个对象 包含了文件之间的关系 */
+let b = main.treePath(a) /*接收文件的路径或者是接收文件路径数组  用于生成文档路径*/
 // console.log(a)
 // console.log(b)
 
@@ -157,6 +222,7 @@ console.log(main)
 let b = main.treePath('./template.txt') /*用于生成文档路径*/
 console.log(b) 
 ~~~
+
 
 ## 基本算法
 文件树转为文件路径分成了两个思路

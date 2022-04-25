@@ -16,14 +16,16 @@ let default_options = {
   vertical: "|"
 };
 
-function create(root, file) {
-  let Filearray = treetopath(file);
-  return createFile(root, Filearray);
+function create(root, path, options) {
+  if (typeof path === 'string') {
+    path = treePath(path);
+  }
+  return createFile(root, path, options);
 }
 
-function treePath(target) {
+function treePath(target, options) {
   if (typeof target !== 'object') {
-    target = fileMap(target);
+    target = fileMap(target, options);
   }
 
   return forEachMap(target);
