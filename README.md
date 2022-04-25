@@ -1,5 +1,10 @@
+## 下载
+~~~shell
+yarn add --dev rx-file
+~~~
+
 ## 主要功能
-将文件树转为文件路径
+将文件树转为文件路径，对于创建大量模板文件和嵌套过深的目录极为适合
 
 ## 简单使用
 ~~~js
@@ -33,7 +38,7 @@ treePath(target)
 fileMap(string|filePath, options) => fileNode{/*....*/}
 
 ~~~
-### 使用案例
+**使用案例：**
 ~~~
 # 假设我有一个 template.txt 里面涵盖有这些内容
 home/user
@@ -57,7 +62,7 @@ console.log(map)
 ~~~js
 treePath(filePath|fileNode, options) => path[]
 ~~~
-
+**使用案例：**
 ~~~js
 // 接着上面的例子 
 const {fileMap, treePath} = require('rx-file');
@@ -85,7 +90,7 @@ options 的选项
 
   "none": 整个参数表明你的 root 参数是一个绝对路径
 
-### 简单使用
+**使用案例：**
 ~~~js
 const path = require("path");
 const main = require("rx-file");
@@ -109,7 +114,7 @@ console.log(b)
 console.log(map) 
 
 ## 配置项
-配置项是非常必要的 它是基础也是核心
+配置项是非常必要的 它是基础也是核心 处理模板的规则由它决定，大多数场合你不需要这个 当你模板文件和默认符合不一致使你需要使用。
 ~~~
 `default_options`: 
 ~~~js
