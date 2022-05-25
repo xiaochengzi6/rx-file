@@ -7,3 +7,4 @@ template.txt
 rollup.config.js
 .npmignore
 ./development/.babelrc.json
+废弃的README.md

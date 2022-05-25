@@ -16,6 +16,7 @@ function createFile(root, filearrs, options) {
     rootdir: "__dirname",
     /*__dirname,  tmpdir, none*/
   };
+  // 判断路径
   if (!root) {
     root = str;
   } else {
@@ -23,12 +24,19 @@ function createFile(root, filearrs, options) {
       root = root.toString() ? root.toString() : str;
     }
   }
+  // 判断接收的东西是否是数组格式
   if (!Array.isArray(filearrs)) {
     throw Error("The parameter is array");
   }
+  // 给出默认配置
   if (!options || !options["rootdir"]) options = option_obj;
-  // 根节点
+  
+  // 根节点 的命名
+  // 用户想在某一路径下生成这些文件所以文件名要对-如果文件名存在才会对其采取一定的措施
+  // 文件名存在才会去创建
   let rootPath = rootPathFunc(options, root);
+
+
   let dirPath;
   filearrs.forEach(function makedirorFile(element) {
     element = path.normalize(element)
@@ -66,13 +74,24 @@ function rootPathFunc(options, root) {
   let rootpath;
   switch (options.rootdir) {
     case "__dirname":
-      rootpath = uniqueFilename(process.cwd(), root, "create themplate");
+      // 添加一个判断机制 看看是否存在 这个文件名的文件
+      rootpath = path.join(process.cwd(), root);
+      if(fs.existsSync(rootpath)){
+        // 生成一个 带有 hash 值的文件名避免文件名命名失败
+        rootpath = uniqueFilename(process.cwd(), root, "create themplate");
+      }
       break;
     case "tmpdir":
-      rootpath = uniqueFilename(os.tmpdir(), root, "create themplate");
+      rootpath = path.join(os.tmpdir(), root);
+      if(fs.existsSync(rootpath)){
+        rootpath = uniqueFilename(os.tmpdir(), root, "create themplate");
+      }
       break;
     case "none":
-      rootpath = uniqueFilename(root, null, "create themplate");
+      rootpath = root;
+      if(fs.existsSync(rootpath)){
+        rootpath = uniqueFilename(root, null, "create themplate");
+      }
       break;
 
     default:

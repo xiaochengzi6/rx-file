@@ -13,6 +13,7 @@ const {
   elementSplit,
   readfile,
   hasgrandElement,
+  default_must /*默认配置*/
 } = require("./utils.js");
 
 var stack = []; // 记录目录
@@ -21,16 +22,6 @@ var deptch = []; // 记录深度
 module.exports = main
 
 function main(stringArrs, default_option) {
-  let default_must = {
-    nullFlie: "NULLFILE",
-    Dir: "DIR",
-    File: "FILE",
-    depth: 5,
-    pathSeparator: "/",
-    throughTee: "├──",
-    endTee: "└──",
-    vertical: "│",
-  };
   if (typeof default_option === null || typeof default_option === undefined) {
     default_option = default_must;
   } else {

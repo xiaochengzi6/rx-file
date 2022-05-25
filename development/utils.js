@@ -1,5 +1,20 @@
 const path = require('path')
 const fs = require('fs')
+
+// 默认配置
+const default_must = {
+  RootFlie: "NULLFILE",
+  inheritRootfile: false,
+  Dir: "DIR",
+  File: "FILE",
+  depth: 5,
+  pathSeparator: "/",
+  throughTee: "├──",
+  endTee: "└──",
+  vertical: "│",
+};
+
+
 class Node {
   constructor(value, stats) {
     this.value = value;
@@ -29,7 +44,8 @@ function root(targetArrs, default_option) {
     element.search(text) !== -1 ? (value = text.exec(element)) : "";
   });
   if (!value) {
-    rootNode = new Node(default_option.nullFlie, default_option.Dir);
+    // 处理到了根文件
+    rootNode = new Node(default_option.RootFlie, default_option.Dir);
   } else {
     rootNode = new Node(value[0], default_option.Dir);
     targetArrs.shift();
@@ -133,5 +149,6 @@ module.exports = {
   isFile,
   elementSplit,
   readfile,
-  hasgrandElement
+  hasgrandElement,
+  default_must
 }
