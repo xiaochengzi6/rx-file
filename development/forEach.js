@@ -20,7 +20,7 @@ function main(node, default_options) {
       // 默认 inheritRootfile = false
       arr.push(node.value);
     }
-    
+    arr.push('');
     forMap(node.children, arr, default_options);
     if (strs) {
       return strs;
