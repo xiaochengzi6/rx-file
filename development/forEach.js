@@ -2,6 +2,7 @@ const path = require("path");
 // 选出默认配置
 const {default_must}  = require('./utils')
 let strs = [];
+
 function main(node, default_options) {
   if (Array.isArray(node) && node[0]) {
     node = node[0]

@@ -1,12 +1,12 @@
 "use strict";
 
-const fileMap = require("./lib/fileMap");
+const fileMap = require("./development/fileMap");
 
-const forEachMap = require("./lib/forEach");
+const forEachMap = require("./development/forEach");
 
-const createFile = require("./lib/createfile");
+const createFile = require("./development/createfile");
 
-const { default_must } = require("./lib/utils");
+const { default_must } = require("./development/utils");
 
 function create(root, path, options) {
   if (typeof path === "string") {
