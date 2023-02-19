@@ -6,5 +6,5 @@ yarn-error.log
 template.txt
 rollup.config.js
 .npmignore
-./development/.babelrc.json
+./development
 废弃的README.md
