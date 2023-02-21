@@ -67,7 +67,7 @@ function getFileOrDirName(element) {
   return value[0]
 }
 
-// 判断是否是同一级文件
+// 判断是否是同一级文件 {找到：true 未找到：false}
 function hasList(element, ops) {
   // const Childtest = /^(├──|└──)/
   const Childtest = new RegExp(
@@ -124,6 +124,8 @@ function isFile(str, ops) {
 
 
 function elementSplit(element) {
+  if(element == null) return 
+  // console.log(element)
   const string = element.trim()
   return string.split(/([#][^#]+)$/)[0]
 }
