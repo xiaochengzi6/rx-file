@@ -1,5 +1,4 @@
 const {
-  Node,
   getNodeRoot,
   hasDir,
   getFileOrDirName,
@@ -9,8 +8,6 @@ const {
   isFile,
   elementSplit,
   readfile,
-  hasgrandElement,
-  defaultOptions /*默认配置*/
 } = require("./utils.js")
 
 var stack = [] // 记录目录
@@ -19,12 +16,6 @@ var deptch = [] // 记录深度
 module.exports = main
 
 function main(str, ops) {
-  if (typeof ops == null) {
-    ops = defaultOptions
-  } else {
-    // 浅拷贝
-    ops = Object.assign({}, defaultOptions, ops)
-  }
   if (!typeof str == "string") {
     throw Error("Parameter must specify the form of a string")
   }
@@ -110,8 +101,7 @@ function disposeElement(target, ops) {
 }
 
 function addElementNode(value, stats, dirlength, ops) {
-  let length = ops.depth
-  // ----------------------test-------------------------
+  const length = ops.depth
   let i = 1
   function feare(dirlength, node, i, length) {
     try {

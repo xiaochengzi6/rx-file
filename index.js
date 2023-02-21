@@ -1,44 +1,41 @@
-"use strict";
+"use strict"
 
 const fileMap = require("./development/fileMap")
 
-const forEachMap = require("./development/forEach");
+const forEachMap = require("./development/forEach")
 
-const createFile = require("./development/createfile");
+const createFile = require("./development/createfile")
 
-const { default_must } = require("./development/utils");
+const { defaultOptions } = require("./development/utils")
 
 function create(root, path, options) {
   if (typeof path === "string") {
     path = treePath(path);
   }
-  return createFile(root, path, options);
+  return createFile(root, path, options)
 }
 
 function treePath(target, options) {
   if (typeof target !== "object") {
-    target = fileMap(target, options);
+    target = fileMap(target, options)
   }
 
-  return forEachMap(target);
+  return forEachMap(target)
 }
 
-function main(target, default_opentions) {
-  // 处理默认参数
-  if (!default_opentions) {
-    default_opentions = default_must;
+function main(target, ops) {
+  if (ops == null) {
+    ops = defaultOptions
+  } else {
+    ops = Object.assign({}, defaultOptions, ops)
   }
-  var File_Node = fileMap(target);
-  var File_Array_Path = forEachMap(File_Node);
+  const fileNode = fileMap(target, ops)
+  const filePath = forEachMap(fileNode, ops)
 
-  // 接收一个 根目录 一个配置对象
-  function middleSetFilePath(root, options) {
-    return createFile(root, File_Array_Path, options)
-  }
   return {
-    FileNode: File_Node,
-    FilePathArrs: File_Array_Path,
-    generFile: middleSetFilePath,
+    fileNode,
+    filePath, 
+    generateFile: createFile(fileNode, filePath, options),
   };
 }
 
@@ -47,5 +44,5 @@ module.exports = {
   create,
   treePath,
   fileMap,
-  default_must,
+  defaultOptions,
 };

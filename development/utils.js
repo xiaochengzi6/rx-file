@@ -17,10 +17,6 @@ const defaultOptions = {
 const rootRegText = /^[a-zA-Z]+(\/){0,1}([a-zA-Z]+)/
 const isDirRegText = /\.[a-z]+/
 const getFileNameRegText = /[a-zA-Z].+/
-const childFileRegText = `^(${defaultOptions.throughTee}|${defaultOptions.endTee})`
-const lastFileRegText = `${defaultOptions.endTee}`
-const deepNodeRegText = `^${defaultOptions.vertical.trim()}`
-
 class Node {
   constructor(value, stats) {
     this.value = value
@@ -107,13 +103,16 @@ module.exports = {
   getFileOrDirName: (element) => {
     return getFileNameRegText.exec(element)[0]
   },
-  hasChildFile: (element) => {
+  hasChildFile: (element, ops) => {
+    const childFileRegText = `^(${ops.throughTee}|${ops.endTee})`
     return getRegContent(childFileRegText, element)
   },
-  hasLastElement: (element) => {
+  hasLastElement: (element, ops) => {
+    const lastFileRegText = `${ops.endTee}`
     return getRegContent(lastFileRegText, element)
   },
-  hasgrandElement: (element) => {
+  hasgrandElement: (element, ops) => {
+    const deepNodeRegText = `^${ops.vertical.trim()}`
     return getRegContent(deepNodeRegText, element)
   },
   defaultOptions
