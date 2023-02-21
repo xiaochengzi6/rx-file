@@ -1,16 +1,17 @@
 const {
   Node,
-  getNodeRoot,
-  hasDir,
+  Stringslice,
+  root,
+  isdir,
   getFileOrDirName,
-  hasChildFile,
+  hasList,
   hasLastElement,
   returnDepth,
   isFile,
   elementSplit,
   readfile,
   hasgrandElement,
-  defaultOptions /*默认配置*/
+  default_must /*默认配置*/
 } = require("./utils.js")
 
 var stack = [] // 记录目录
@@ -20,10 +21,10 @@ module.exports = main
 
 function main(str, ops) {
   if (typeof ops == null ){
-    ops = defaultOptions
+    ops = default_must
   } else {
     // 浅拷贝
-    ops = Object.assign({}, defaultOptions, ops)
+    ops = Object.assign({}, default_must, ops)
   }
   if (!typeof str == "string") {
     throw Error("Parameter must specify the form of a string")
@@ -42,11 +43,10 @@ function main(str, ops) {
   }
   
   // 将树状图 “按行切分”
-  target = str.slice('\n')
-  console.log(target)
+  target = Stringslice(str)
   // 获得 父节点
-  const nodegetNodeRoot = getNodeRoot(target, ops)
-  stack.push(nodegetNodeRoot)
+  const nodeRoot = root(target, ops)
+  stack.push(nodeRoot)
   forEachTarget(target, ops)
 
   return stack
@@ -60,16 +60,17 @@ function forEachTarget(targets, ops) {
     target = elementSplit(target)
 
     // 主遍历
-    disposeElement(target, ops)
+    child(target, ops)
   }
 }
 
-function disposeElement(target, ops) {
+function child(target, ops) {
   if (target == null) {return void 0}
-  const [targetElement, dirlength] = returnDepth(target, ops)
-  // 查看是否是子元素（子目录或者子文件）
-  const ischildrenElement = hasChildFile(targetElement, ops) 
 
+  const [targetElement, dirlength] = returnDepth(target, ops)
+  // 查看是否是子元素（子目录或者子文件
+  const ischildrenElement = hasList(targetElement, ops) /*子节点*/
+  /*孙节点*/
   let isgrandElement = ischildrenElement
     ? false
     : hasgrandElement(target, ops)
@@ -83,7 +84,7 @@ function disposeElement(target, ops) {
   if (ischildrenElement) {
     let value = getFileOrDirName(targetElement) // 获得目录或者是文件名
     /*目录*/
-    if (hasDir(value)) {
+    if (isdir(value)) {
       /*元素深度*/
       deptch.push({ value, depath: dirlength })
       /*元素*/
@@ -107,6 +108,7 @@ function disposeElement(target, ops) {
     /*循环 */
     child(target, ops)
   }
+  return void 666
 }
 
 function addElementNode(value, stats, dirlength, ops) {

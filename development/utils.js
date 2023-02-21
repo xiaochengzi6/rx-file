@@ -2,7 +2,7 @@ const path = require('path')
 const fs = require('fs')
 
 // 默认配置
-const default_must = {
+const defaultOptions = {
   RootFlie: "NULLFILE",
   inheritRootfile: false,
   Dir: "DIR",
@@ -14,6 +14,12 @@ const default_must = {
   vertical: "│",
 }
 
+const rootRegText = /^[a-zA-Z]+(\/){0,1}([a-zA-Z]+)/
+const isDirRegText = /\.[a-z]+/
+const getFileNameRegText = /[a-zA-Z].+/
+const childFileRegText = `^(${defaultOptions.throughTee}|${defaultOptions.endTee})`
+const lastFileRegText = `${defaultOptions.endTee}`
+const deepNodeRegText = `^${defaultOptions.vertical.trim()}`
 
 class Node {
   constructor(value, stats) {
@@ -32,16 +38,11 @@ class Node {
   }
 }
 
-function Stringslice(target) {
-  return target.split("\n")
-}
-// 2.0 找出根节点
-function root(targetArrs, ops) {
-  // let text = /^[a-zA-Z]+\//
-  let text = /^[a-zA-Z]+(\/){0,1}([a-zA-Z]+)/
+// 找出根节点
+function getNodeRoot(targetArrs, ops) {
   let rootNode, value
   targetArrs.forEach((element, index) => {
-    element.search(text) !== -1 ? (value = text.exec(element)) : ""
+    element.search(rootRegText) !== -1 ? (value = rootRegText.exec(element)) : ""
   })
   if (!value) {
     // 处理到了根文件
@@ -53,53 +54,13 @@ function root(targetArrs, ops) {
   return rootNode
 }
 
-// 判断是否是目录 不是目录就会返回 false
-function isdir(element) {
-  const elementTest = /\.[a-z]+/
-  let boolean = element.search(elementTest) == -1 ? true : false
-  return boolean
-}
 
-// 提取文件或者目录名
-function getFileOrDirName(element) {
-  const name = /[a-zA-Z].+/
-  let value = name.exec(element)
-  return value[0]
-}
-
-// 判断是否是同一级文件 {找到：true 未找到：false}
-function hasList(element, ops) {
-  // const Childtest = /^(├──|└──)/
-  const Childtest = new RegExp(
-    `^(${ops.throughTee}|${ops.endTee})`
-  )
-  try{
-    return element.search(Childtest) !== -1 ? true : false
-  }catch(err){
-    throw Error("You should reset the defaults opsS.endTee || opsS.throughTee")
-  }
-}
-
-// 是否是最后一个文件
-function hasLastElement(element, ops) {
-  // const Childtest = /└──/
-  const Childtest = new RegExp(`${ops.endTee}`)
-  try{
-    let boolean = element.search(Childtest) !== -1 ? true : false
-    return boolean
-  }catch(err){
-    throw Error("You should reset the defaults opsS.endTee")
-  }
-}
-
-// 是否孙节点 '|  |  |  └──filename/.js'
-function hasgrandElement(element, ops) {
-  // const test = /^|/
-  const test = new RegExp(`^${ops.vertical.trim()}`)
-  try{
+function getRegContent(reg, element) {
+  const test = new RegExp(reg)
+  try {
     return element.search(test) !== -1 ? true : false
-  }catch(err){
-    throw Error("You should reset the defaults opsS.vertical")
+  } catch (err) {
+    throw Error(`You should reset the defaults ${reg}`)
   }
 }
 
@@ -112,6 +73,7 @@ function returnDepth(element, ops) {
   // 返回孙节点的目录名和所在的深度
   return [dirname, dirlength]
 }
+
 // 是否是文件
 function isFile(str, ops) {
   const Childtest = new RegExp(`${ops.endTee}`)
@@ -122,10 +84,8 @@ function isFile(str, ops) {
   )
 }
 
-
 function elementSplit(element) {
-  if(element == null) return 
-  // console.log(element)
+  if (element == null) return
   const string = element.trim()
   return string.split(/([#][^#]+)$/)[0]
 }
@@ -138,16 +98,25 @@ function readfile(element) {
 
 module.exports = {
   Node,
-  Stringslice,
-  root,
-  isdir,
-  getFileOrDirName,
-  hasList,
-  hasLastElement,
+  getNodeRoot,
   returnDepth,
   isFile,
   elementSplit,
   readfile,
-  hasgrandElement,
-  default_must
+  hasDir: (element) => {
+    return getRegContent(isDirRegText, element)
+  },
+  getFileOrDirName: (element) => {
+    return getFileNameRegText.exec(element)[0]
+  },
+  hasChildFile: (element) => {
+    return getRegContent(childFileRegText, element)
+  },
+  hasLastElement: (element) => {
+    return getRegContent(lastFileRegText, element)
+  },
+  hasgrandElement: (element) => {
+    return getRegContent(deepNodeRegText, element)
+  },
+  defaultOptions
 }
