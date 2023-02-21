@@ -54,7 +54,6 @@ function getNodeRoot(targetArrs, ops) {
   return rootNode
 }
 
-
 function getRegContent(reg, element) {
   const test = new RegExp(reg)
   try {
@@ -66,7 +65,6 @@ function getRegContent(reg, element) {
 
 // 返回孙节点的节点
 function returnDepth(element, ops) {
-  // ops.sequences.vertical: "|"
   let dirname = element.split(`${ops.vertical}`)
   const dirlength = dirname.length - 1
   dirname = dirname[dirlength].trim()
@@ -104,7 +102,7 @@ module.exports = {
   elementSplit,
   readfile,
   hasDir: (element) => {
-    return getRegContent(isDirRegText, element)
+    return element.search(isDirRegText)
   },
   getFileOrDirName: (element) => {
     return getFileNameRegText.exec(element)[0]

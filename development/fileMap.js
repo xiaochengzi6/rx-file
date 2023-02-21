@@ -19,7 +19,7 @@ var deptch = [] // 记录深度
 module.exports = main
 
 function main(str, ops) {
-  if (typeof ops == null ){
+  if (typeof ops == null) {
     ops = defaultOptions
   } else {
     // 浅拷贝
@@ -31,7 +31,7 @@ function main(str, ops) {
 
   str = str.trim()
   let target
-  
+
   // 读取文件中树状图
   if (isFile(str, ops)) {
     try {
@@ -40,10 +40,9 @@ function main(str, ops) {
       throw Error("Wrong file path")
     }
   }
-  
+
   // 将树状图 “按行切分”
-  target = str.slice('\n')
-  console.log(target)
+  target = str.split('\n')
   // 获得 父节点
   const nodegetNodeRoot = getNodeRoot(target, ops)
   stack.push(nodegetNodeRoot)
@@ -51,6 +50,7 @@ function main(str, ops) {
 
   return stack
 }
+
 // 遍历
 function forEachTarget(targets, ops) {
   // let index = stack.length - 0
@@ -65,10 +65,10 @@ function forEachTarget(targets, ops) {
 }
 
 function disposeElement(target, ops) {
-  if (target == null) {return void 0}
+  if (target == null) { return void 0 }
   const [targetElement, dirlength] = returnDepth(target, ops)
   // 查看是否是子元素（子目录或者子文件）
-  const ischildrenElement = hasChildFile(targetElement, ops) 
+  const ischildrenElement = hasChildFile(targetElement, ops)
 
   let isgrandElement = ischildrenElement
     ? false
@@ -105,7 +105,7 @@ function disposeElement(target, ops) {
     }
   } else if (isgrandElement) {
     /*循环 */
-    child(target, ops)
+    disposeElement(target, ops)
   }
 }
 

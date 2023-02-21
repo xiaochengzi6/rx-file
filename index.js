@@ -1,6 +1,6 @@
 "use strict";
 
-const fileMap = require("./development/fileMap");
+const fileMap = require("./development/fileMap")
 
 const forEachMap = require("./development/forEach");
 
