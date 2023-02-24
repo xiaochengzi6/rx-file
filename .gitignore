@@ -8,4 +8,4 @@ rollup.config.js
 .npmignore
 废弃的README.md
 yarn-error.log
-# /development/oldVersion
+/development/oldVersion
