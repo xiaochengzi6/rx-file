@@ -19,7 +19,7 @@
     "print",
     "path"
   ],
-  "peerDependencies": {
+  "dependencies": {
     "unique-filename": "^1.1.1"
   },
   "scripts": {
