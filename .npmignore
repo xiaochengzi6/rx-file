@@ -4,6 +4,9 @@ rollup.config.js
 本地文件.md
 /.vscode
 /development
+/ts 
+yarn.lock
 template.txt
 yarn-error.log
+index.js
 废弃的README.md

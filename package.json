@@ -1,11 +1,15 @@
 {
   "name": "rx-file",
   "version": "2.1.4",
-  "main": "index.js",
   "license": "MIT",
   "author": "2742217795@qq.com",
   "description": "File tree to path",
-  "type": "module",
+  "main": "./lib/index.js",
+  "exports": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "util",
     "utility",

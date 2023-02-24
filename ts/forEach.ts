@@ -1,5 +1,5 @@
 const path = require("path")
-import {defaultOptionsType, node} from '../development/utils'
+import {defaultOptionsType, node} from './utils'
 let strs: string[] = []
 
 export function main(node: node, ops: defaultOptionsType) {

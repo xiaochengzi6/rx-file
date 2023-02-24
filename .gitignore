@@ -6,6 +6,6 @@ yarn-error.log
 template.txt
 rollup.config.js
 .npmignore
-./development
 废弃的README.md
 yarn-error.log
+# /development/oldVersion
