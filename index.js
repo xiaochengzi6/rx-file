@@ -35,7 +35,9 @@ function main(target, ops) {
   return {
     fileNode,
     filePath, 
-    generateFile: createFile(fileNode, filePath, options),
+    generateFile: (root, ops) => {
+      return createFile(root, filePath, ops)
+    },
   };
 }
 

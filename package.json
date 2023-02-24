@@ -5,7 +5,7 @@
   "license": "MIT",
   "author": "2742217795@qq.com",
   "description": "File tree to path",
-  "dependencies": {},
+  "type": "module",
   "keywords": [
     "util",
     "utility",
@@ -26,6 +26,7 @@
     "@babel/core": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@rollup/plugin-babel": "^5.3.1",
+    "@types/node": "^18.14.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "unique-filename": "^1.1.1"
   }

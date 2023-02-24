@@ -1,11 +1,11 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add --dev @babel/preset-presets-env
+  C:\Program Files\nodejs\node.exe C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add typescript
 
 PATH: 
   D:\Program Files\Git\mingw64\bin;D:\Program Files\Git\usr\bin;C:\Users\a2742\bin;C:\Program Files\Common Files\Siemens\Automation\Simatic OAM\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;D:\blog;D:\Program Files\Microsoft VS Code;D:\mingw\mingw64\bin;D:\Program Files\Git\cmd;D:\Program Files\Git\;D:\迅雷下载\python-3.7.8-embed-amd64;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Microsoft SQL Server\120\DTS\Binn;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;D:\Program Files\MaTable\runtime\win64;D:\Program Files\MaTable\bin;D:\Program Files\MaTable\polyspace\bin;C:\Users\a2742\AppData\Local\Yarn\bin;C:\Program Files\nodejs;C:\Users\a2742\AppData\Local\Microsoft\WindowsApps;D:\Program Files\banzip解压缩软件;D:\Program Files\vscode\Microsoft VS Code\bin;D:\Program Files\PyCharm Community Edition 2021.1.2\bin;C:\Users\a2742\AppData\Roaming\npm
 
 Yarn version: 
-  1.22.17
+  1.22.19
 
 Node version: 
   16.14.2
@@ -14,23 +14,14 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npmjs.org/@babel%2fpreset-presets-env: Not found
-      at Request.params.callback [as _callback] (C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:67029:18)
-      at Request.self.callback (C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140883:22)
-      at Request.emit (node:events:526:28)
-      at Request.<anonymous> (C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141855:10)
-      at Request.emit (node:events:526:28)
-      at IncomingMessage.<anonymous> (C:\Users\a2742\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141777:12)
-      at Object.onceWrapper (node:events:645:28)
-      at IncomingMessage.emit (node:events:538:35)
-      at endReadableNT (node:internal/streams/readable:1345:12)
-      at processTicksAndRejections (node:internal/process/task_queues:83:21)
+  Error: connect ETIMEDOUT 104.16.27.35:443
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1157:16)
 
 npm manifest: 
   {
     "name": "rx-file",
-    "version": "2.0.1",
-    "main": "src/index.js",
+    "version": "2.1.4",
+    "main": "index.js",
     "license": "MIT",
     "author": "2742217795@qq.com",
     "description": "File tree to path",
