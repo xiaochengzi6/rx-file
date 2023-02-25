@@ -1,3 +1,4 @@
+![Image](https://github.com/xiaochengzi6/rx-file/blob/v3.0/logo.jpg)
 ![npm](https://img.shields.io/npm/v/rx-file)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/rx-file)
 ![NPM](https://img.shields.io/npm/l/rx-file)
