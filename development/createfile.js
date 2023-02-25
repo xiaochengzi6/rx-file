@@ -8,9 +8,9 @@ module.exports = createFile;
 /**
  *用来接收一个目录名 和 路径数组
  * @param {*} root
- * @param {*} filearrs
+ * @param {*} filePathArr
  */
-function createFile(root, filearrs, options) {
+function createFile(filePathArr, root, options) {
   let str = "themplate-" + Math.random().toString(36).slice(2);
   let option_obj = {
     rootdir: "__dirname",
@@ -25,7 +25,7 @@ function createFile(root, filearrs, options) {
     }
   }
   // 判断接收的东西是否是数组格式
-  if (!Array.isArray(filearrs)) {
+  if (!Array.isArray(filePathArr)) {
     throw Error("The parameter is array");
   }
   // 给出默认配置
@@ -38,7 +38,7 @@ function createFile(root, filearrs, options) {
 
 
   let dirPath;
-  filearrs.forEach(function makedirorFile(element) {
+  filePathArr.forEach(function makedirorFile(element) {
     element = path.normalize(element)
     let { dir, ext } = path.parse(element);
     // 文件夹的根节点

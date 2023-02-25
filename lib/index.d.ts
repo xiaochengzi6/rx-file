@@ -12,10 +12,12 @@ interface defaultOptionsType {
 
 type FileOptions = { rootdir: '__dirname' | 'tmpdir' | 'none' }
 
+type CreateFile = (filePathArr: string[], root?: string, ops?: FileOptions) => void 
+
 declare function treeToFilePath(str: string, ops?: defaultOptionsType ): {
   fileMap: Map<string, any>
   filePath: string[],
-  generateFile: (root: string, filePath: string[], ops: FileOptions) => string 
+  generateFile: (root?: string, ops?: FileOptions) => CreateFile
 }
 
 export = treeToFilePath

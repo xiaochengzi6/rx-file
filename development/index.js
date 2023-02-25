@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require("path")
-const createFile = require("./development/createfile")
+const createFile = require("./createfile")
 
 const defaultOptions = {
   RootFlie: "NULLFILE",
@@ -57,18 +57,18 @@ function treeToFilePath(str, ops = defaultOptions) {
   stack.push(nodegetNodeRoot)
   forEachTarget(target, ops)
 
-  const filePath = generaterFilePath(stack[0], ops)
-
+  generaterFilePath(stack[0], ops)
+  
   return {
     fileMap: stack[0],
-    filePath,
+    filePath: fileNamePaths,
     generateFile: (root, ops) => {
-      return createFile(root, filePath, ops)
+      return createFile(fileNamePaths, root, ops)
     },
   }
 }
 
-module.export = treeToFilePath
+module.exports = treeToFilePath
 // ===============================================================================
 // ==                                处理图形                                   ==
 // ===============================================================================
@@ -174,23 +174,23 @@ const generaterFilePath = (node, ops) => {
   const fileNameArr = []
   ops.inheritRootfile && fileNameArr.push(node.value)
 
-  forEachFileMap(node.children, fileNameArr)
+  forEachFileMap(node.children, fileNameArr, ops)
 }
 
 // 遍历 map 结构
-const forEachFileMap = (map, arr) => {
+const forEachFileMap = (map, arr, ops) => {
   map.forEach((element) => {
     if (element.stats == "DIR") {
       arr.push(element.value)
 
       if (element.children.size == 0) {
-        addString("", arr)
+        addString("", arr, ops)
         arr.pop()
       } else {
         forEachFileMap(element.children, arr)
       }
     } else {
-      addString(element.value, arr, fileNamePaths)
+      addString(element.value, arr, ops)
     }
   })
 
@@ -198,13 +198,15 @@ const forEachFileMap = (map, arr) => {
 }
 
 // 组装 file name
-const addString = (element, arr) => {
+const addString = (element, arr, ops) => {
   let str = ""
-  const lenght = arr.length
-  if (!length) return
-
-  for (let i = 0; i < lenght; i++) {
-    str = str + arr[i] + path.sep
+  const length = arr.length
+  if (length <= 0) return
+  
+  const pathSeparator = ops && ops.pathSeparator ? ops.pathSeparator : path.sep
+  
+  for (let i = 0; i < length; i++) {
+    str = str + arr[i] + pathSeparator
   }
 
   str += element
@@ -229,7 +231,7 @@ const getNodeRoot = (targetArrs, ops) => {
 
 const getRegContent = (reg, element)=> {
   const test = new RegExp(reg)
-  return !!element.search(test)
+  return element.search(test) !== -1 ? true : false 
 }
 
 // 返回孙节点的节点
