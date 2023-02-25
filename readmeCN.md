@@ -1,3 +1,7 @@
+![npm](https://img.shields.io/npm/v/rx-file)
+![npm bundle size](https://img.shields.io/bundlephobia/min/rx-file)
+![NPM](https://img.shields.io/npm/l/rx-file)
+[![NPM](https://img.shields.io/badge/中文-readme-red)](https://github.com/xiaochengzi6/rx-file/blob/v3.0/readmeCN.md)
 ## rx-file 是什么？有什么作用？
 
 rx-file 是一个能够迅速创建模板文件的工具解决了手动创建大量文件的的困扰。
