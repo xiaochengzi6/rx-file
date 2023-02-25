@@ -9,4 +9,4 @@ rollup.config.js
 废弃的README.md
 yarn-error.log
 /development/oldVersion
-/template-*
+/themplate-*
